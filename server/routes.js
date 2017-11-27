@@ -28,5 +28,12 @@ module.exports = function (app) {
       }).then(function (result) {
         return res.send(result);
       });
+    });
+
+  app.route('/api/videogames/:id/status')
+    .put(function (req, res) {
+      Videogame.findByIdAndUpdate({_id: req.params.id}, {$set: {status: req.body.status}}, function (err, result) {
+        return res.send(result);
+      });
     })
 };

@@ -19,11 +19,12 @@ export class AppComponent {
 
   updateLists(event): void {
     if (event.destinationList === 'finished') {
-      this.service.addFinished({name: event.gameName, platform: 'ps3', status: 'finished'});
-      this.service.removePending(event.gameName);
+      console.log(event)
+      this.service.addFinished({_id: event._id, name: '', platform: 'ps3', status: 'finished'});
+      this.service.removePending(event._id);
     } else {
-      this.service.addPending({name: event.gameName, platform: 'ps3', status: 'pending'});
-      this.service.removeFinished(event.gameName);
+      this.service.addPending({_id: event._id, name: '', platform: 'ps3', status: 'pending'});
+      this.service.removeFinished(event._id);
     }
   }
 }

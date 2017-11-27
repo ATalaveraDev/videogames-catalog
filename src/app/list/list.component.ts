@@ -20,15 +20,15 @@ export class ListComponent {
     event.preventDefault();
 
     if (!this.elementIsPresent(event.dataTransfer.getData('text'))) {
-      this.gameDropped.emit({gameName: event.dataTransfer.getData('text'), destinationList: this.id});
+      this.gameDropped.emit({_id: event.dataTransfer.getData('text'), destinationList: this.id});
     }
   }
 
-  elementIsPresent(gameName) {
+  elementIsPresent(id) {
     let isPresent = false;
 
     this.elements.forEach((element) => {
-      if (element.name === gameName) {
+      if (element._id === id) {
         isPresent = true;
       }
     });
@@ -41,6 +41,10 @@ export class ListComponent {
   }
 
   onDragStart(event) {
-    event.dataTransfer.setData('text', event.target.innerText);
+    this.elements.forEach((element) => {
+      if (element.name === event.target.innerText) {
+        event.dataTransfer.setData('text', element._id);
+      }
+    });
   }
 }
