@@ -6,40 +6,36 @@ import { Videogame } from './videogame';
 
 @Injectable()
 export class VideogamesService {
-  pendingSubject = new ReplaySubject<Array<Videogame>>();
-  finishedSubject = new ReplaySubject<Array<Videogame>>();
+  private pendingSubject = new ReplaySubject<Array<Videogame>>();
+  private finishedSubject = new ReplaySubject<Array<Videogame>>();
 
   pending$ = this.pendingSubject.asObservable();
   finished$ = this.finishedSubject.asObservable();
 
   constructor(private http: HttpClient) { }
 
-  getVideogames(status) {
+  getVideogames(status: string) {
     this.http.get('http://localhost:8080/api/videogames/' + status)
       .subscribe((response: Array<Videogame>) => {
-        if (status === 'pending') {
-          this.pendingSubject.next(response);
-        } else {
-          this.finishedSubject.next(response);
-        }
+        status === 'pending' ? this.pendingSubject.next(response) : this.finishedSubject.next(response);
       });
   }
 
-  addPending(game) {
+  addPending(game: Videogame): void {
     this.http.put('http://localhost:8080/api/videogames/' + game._id + '/status', {status: 'pending'})
       .subscribe((updatedGame: Videogame) => {
         this.pending$.subscribe((list: Array<Videogame>) => list.push(updatedGame));
       });
   }
 
-  addFinished(game) {
+  addFinished(game: Videogame): void {
     this.http.put('http://localhost:8080/api/videogames/' + game._id + '/status', {status: 'finished'})
       .subscribe((updatedGame: Videogame) => {
         this.finished$.subscribe((list: Array<Videogame>) => list.push(updatedGame));
       });
   }
 
-  removePending(id) {
+  removePending(id: string): void {
     this.pending$.subscribe((list: Array<Videogame>) => {
       list.forEach((game, index) => {
         if (game._id === id) {
@@ -49,7 +45,7 @@ export class VideogamesService {
     });
   }
 
-  removeFinished(id) {
+  removeFinished(id: string): void {
     this.finished$.subscribe((list: Array<Videogame>) => {
       list.forEach((game, index) => {
         if (game._id === id) {
