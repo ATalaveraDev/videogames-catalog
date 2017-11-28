@@ -36,22 +36,18 @@ export class VideogamesService {
   }
 
   removePending(id: string): void {
-    this.pending$.subscribe((list: Array<Videogame>) => {
-      list.forEach((game, index) => {
-        if (game._id === id) {
-          list.splice(index, 1);
-        }
-      });
-    });
+    this.pending$.subscribe((list: Array<Videogame>) => this.removeFromList(list, id));
   }
 
   removeFinished(id: string): void {
-    this.finished$.subscribe((list: Array<Videogame>) => {
-      list.forEach((game, index) => {
-        if (game._id === id) {
-          list.splice(index, 1);
-        }
-      });
+    this.finished$.subscribe((list: Array<Videogame>) => this.removeFromList(list, id));
+  }
+
+  private removeFromList(list: Array<Videogame>, id: string): void {
+    list.forEach((game, index) => {
+      if (game._id === id) {
+        list.splice(index, 1);
+      }
     });
   }
 }
