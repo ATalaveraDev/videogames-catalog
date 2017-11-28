@@ -19,7 +19,6 @@ export class AppComponent {
 
   updateLists(event): void {
     if (event.destinationList === 'finished') {
-      console.log(event)
       this.service.addFinished({_id: event._id, name: '', platform: 'ps3', status: 'finished'});
       this.service.removePending(event._id);
     } else {
