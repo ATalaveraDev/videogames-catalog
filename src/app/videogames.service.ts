@@ -14,6 +14,11 @@ export class VideogamesService {
 
   constructor(private http: HttpClient) { }
 
+  createVideogame(videogame: Videogame): void {
+    this.http.post('http://localhost:8080/api/videogames', {name: videogame.name, status: videogame.status, platform: videogame.platform})
+      .subscribe();
+  }
+
   getVideogames(status: string) {
     this.http.get('http://localhost:8080/api/videogames/' + status)
       .subscribe((response: Array<Videogame>) => {

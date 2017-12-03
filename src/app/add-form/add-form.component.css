@@ -1,0 +1,7 @@
+a {
+    cursor: pointer;
+}
+
+.game-form input, .game-form select {
+    width: 100%;
+}
