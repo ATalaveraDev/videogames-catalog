@@ -16,7 +16,13 @@ export class VideogamesService {
 
   createVideogame(videogame: Videogame): void {
     this.http.post('http://localhost:8080/api/videogames', {name: videogame.name, status: videogame.status, platform: videogame.platform})
-      .subscribe();
+      .subscribe((newGame: Videogame) => {
+        if (newGame.status === 'pending') {
+          this.pending$.subscribe((list: Array<Videogame>) => list.push(newGame));
+        } else if (newGame.status === 'finished') {
+          this.finished$.subscribe((list: Array<Videogame>) => list.push(newGame));
+        }
+      });
   }
 
   getVideogames(status: string) {
