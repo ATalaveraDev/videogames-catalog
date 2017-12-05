@@ -25,6 +25,7 @@ export class AddFormComponent implements OnInit {
 
   onSubmit(): void {
     this.service.createVideogame(this.gameForm.value);
+    this.gameForm.reset({status: 'pending'});
   }
 
   toggleAdd() {
