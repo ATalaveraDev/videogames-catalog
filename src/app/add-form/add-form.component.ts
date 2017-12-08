@@ -17,9 +17,9 @@ export class AddFormComponent implements OnInit {
 
   ngOnInit() {
     this.gameForm = new FormGroup({
-      name: new FormControl('', Validators.required),
+      name: new FormControl(' ', Validators.required),
       status: new FormControl('pending', Validators.required),
-      platform: new FormControl('', Validators.required)
+      platform: new FormControl(' ', Validators.required)
     });
   }
 
