@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 import { Videogame } from './videogame';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class VideogamesService {
@@ -15,7 +16,7 @@ export class VideogamesService {
   constructor(private http: HttpClient) { }
 
   createVideogame(videogame: Videogame): void {
-    this.http.post('http://localhost:8080/api/videogames', {name: videogame.name, status: videogame.status, platform: videogame.platform})
+    this.http.post(environment.endpoint + '/api/videogames', {name: videogame.name, status: videogame.status, platform: videogame.platform})
       .subscribe((newGame: Videogame) => {
         if (newGame.status === 'pending') {
           this.pending$.subscribe((list: Array<Videogame>) => list.push(newGame));
@@ -26,21 +27,21 @@ export class VideogamesService {
   }
 
   getVideogames(status: string) {
-    this.http.get('http://localhost:8080/api/videogames/' + status)
+    this.http.get(environment.endpoint + '/api/videogames/' + status)
       .subscribe((response: Array<Videogame>) => {
         status === 'pending' ? this.pendingSubject.next(response) : this.finishedSubject.next(response);
       });
   }
 
   addPending(game: Videogame): void {
-    this.http.put('http://localhost:8080/api/videogames/' + game._id + '/status', {status: 'pending'})
+    this.http.put(environment.endpoint + '/api/videogames/' + game._id + '/status', {status: 'pending'})
       .subscribe((updatedGame: Videogame) => {
         this.pending$.subscribe((list: Array<Videogame>) => list.push(updatedGame));
       });
   }
 
   addFinished(game: Videogame): void {
-    this.http.put('http://localhost:8080/api/videogames/' + game._id + '/status', {status: 'finished'})
+    this.http.put(environment.endpoint + '/api/videogames/' + game._id + '/status', {status: 'finished'})
       .subscribe((updatedGame: Videogame) => {
         this.finished$.subscribe((list: Array<Videogame>) => list.push(updatedGame));
       });
