@@ -8,6 +8,8 @@ var mongoose = require('mongoose');
 
 var port = process.env.PORT || 8080;
 
+var igdb = require('./server/igdb-api/igdb')();
+
 mongoose.connect('supermario:supermario@ds119685.mlab.com:19685/videogames');
 
 app.use(bodyParser.json({type: 'application/json'}));
