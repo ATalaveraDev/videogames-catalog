@@ -12,7 +12,7 @@ export class AppComponent {
   pending: Array<Videogame>;
   finished: Array<Videogame>;
 
-  constructor(private service: VideogamesService) {
+  constructor(public service: VideogamesService) {
     this.service.getVideogames('pending');
     this.service.getVideogames('finished');
   }
