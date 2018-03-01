@@ -3,6 +3,7 @@ import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from '@angula
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/debounceTime';
+import { SearchService } from '../search.service';
 
 @Component({
   selector: 'app-search-input',
@@ -11,7 +12,7 @@ import 'rxjs/add/operator/debounceTime';
 export class InputComponent implements AfterViewInit {
   @ViewChild('search') searcher: ElementRef;
 
-  constructor(private ngZone: NgZone) { }
+  constructor(private ngZone: NgZone, private searchSrv: SearchService) { }
 
   ngAfterViewInit(): void {
     this.ngZone.runOutsideAngular(() => {
@@ -19,7 +20,7 @@ export class InputComponent implements AfterViewInit {
         .debounceTime(1000)
         .subscribe((event: KeyboardEvent) => {
           if ((<HTMLInputElement>event.target).value.length > 2) {
-            console.log((<HTMLInputElement>event.target).value);
+            this.searchSrv.searchByTitle((<HTMLInputElement>event.target).value);
           }
         });
     });

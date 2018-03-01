@@ -10,6 +10,7 @@ import { AddFormComponent } from './add-form/add-form.component';
 import { SearchComponent } from './search/search.component';
 import { InputComponent } from './search/input/input.component';
 import { ResultsComponent } from './search/results/results.component';
+import { SearchService } from './search/search.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,10 @@ import { ResultsComponent } from './search/results/results.component';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [VideogamesService],
+  providers: [
+    VideogamesService,
+    SearchService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
