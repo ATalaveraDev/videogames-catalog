@@ -1,8 +1,18 @@
-<div class="row text-center">
+<!--<div class="row text-center">
   <h1>Videogames</h1>
   <add-form></add-form>
+</div>-->
+<div class="row text-center">
+  <app-search>
+    <div class="col-md-4">
+      <app-search-input></app-search-input>
+    </div>
+    <div class="col-md-8">
+      <app-search-results></app-search-results>
+    </div>
+  </app-search>
 </div>
-<div class="row">
+<!--<div class="row">
   <div class="col-xs-6">
     <h3 class="text-center">Pending</h3>
     <app-list [elements]="service.pending$ | async" [id]="'pending'" (gameDropped)="updateLists($event)"></app-list>
@@ -11,4 +21,4 @@
     <h3 class="text-center">Finished</h3>
     <app-list [elements]="service.finished$ | async" [id]="'finished'" (gameDropped)="updateLists($event)"></app-list>
   </div>
-</div>
+</div>-->

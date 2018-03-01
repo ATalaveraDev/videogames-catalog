@@ -11,8 +11,10 @@ import { VideogamesService } from './videogames.service';
 export class AppComponent {
   pending: Array<Videogame>;
   finished: Array<Videogame>;
+  searchTerm: string;
 
   constructor(public service: VideogamesService) {
+    this.searchTerm = '';
     this.service.getVideogames('pending');
     this.service.getVideogames('finished');
   }

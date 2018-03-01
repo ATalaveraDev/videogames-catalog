@@ -7,12 +7,18 @@ import { AppComponent } from './app.component';
 import { ListComponent } from './list/list.component';
 import { VideogamesService } from './videogames.service';
 import { AddFormComponent } from './add-form/add-form.component';
+import { SearchComponent } from './search/search.component';
+import { InputComponent } from './search/input/input.component';
+import { ResultsComponent } from './search/results/results.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListComponent,
-    AddFormComponent
+    AddFormComponent,
+    SearchComponent,
+    InputComponent,
+    ResultsComponent
   ],
   imports: [
     BrowserModule,
