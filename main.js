@@ -4,13 +4,10 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
-var mongoose = require('mongoose');
+require('./server/modules/database/connection')();
 
 var port = process.env.PORT || 8080;
-
-var igdb = require('./server/igdb-api/igdb')();
-
-mongoose.connect('supermario:supermario@ds119685.mlab.com:19685/videogames');
+var igdb = require('./server/modules/igdb-api/igdb')();
 
 app.use(bodyParser.json({type: 'application/json'}));
 app.use(bodyParser.urlencoded({extended: true}));

@@ -1,7 +1,8 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # critical info
-/server/igdb-api/API_KEY.js
+/server/modules/igdb-api/API_KEY.js
+/server/modules/database/DB_KEY.js
 
 # compiled output
 /dist
