@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from 'rxjs/Observable';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class SearchService {
@@ -14,5 +15,8 @@ export class SearchService {
     this.results$ = this.resultsSubject.asObservable();
   }
 
-  searchByTitle(title: string): void { }
+  searchByTitle(title: string): void {
+    this.http.post(environment.endpoint + '/api/games/search', { title: title })
+      .subscribe((result: Array<any>) => console.log(result));
+  }
 }
