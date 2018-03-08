@@ -19,7 +19,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-require('./server/routes/main.routes')(app, igdb);
+require('./server/routes/routes')(app, igdb);
 
 app.all('/*', function (req, res) {
   res.sendFile('src/index.html', { root: __dirname });

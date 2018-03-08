@@ -1,16 +1,16 @@
-var Videogame = require('../videogame');
+'use strict';
 
-module.exports = function (app, igdb) {
+module.exports = function (app, model) {
   app.route('/api/videogames')
     .get(function (req, res) {
-      Videogame.find(function (err, res) {
+      model.find(function (err, res) {
         return res;
       }).then(function (result) {
         return res.send(result);
       });
     })
     .post(function (req, res) {
-      var videogame = new Videogame();
+      var videogame = new model();
 
       videogame.name = req.body.name;
       videogame.status = req.body.status;
@@ -20,7 +20,4 @@ module.exports = function (app, igdb) {
         return res.send(result);
       });
     });
-
-  require('./status.routes')(app, Videogame);
-  require('./search.routes')(app, igdb);
 };

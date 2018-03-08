@@ -3,6 +3,7 @@ import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from '@angula
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/debounceTime';
+
 import { SearchService } from '../search.service';
 
 @Component({
