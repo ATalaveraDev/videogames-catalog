@@ -4,6 +4,7 @@ import { SearchService } from '../search.service';
 
 @Component({
   selector: 'app-search-results',
+  styleUrls: ['./results.component.less'],
   templateUrl: './results.component.html'
 })
 export class ResultsComponent {
@@ -14,5 +15,10 @@ export class ResultsComponent {
       this.results = games;
       this.changeDetector.detectChanges();
     });
+  }
+
+  clearSearch(): void {
+    this.results.length = 0;
+    this.changeDetector.detectChanges();
   }
 }

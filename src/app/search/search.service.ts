@@ -19,7 +19,7 @@ export class SearchService {
   searchByTitle(title: string): void {
     this.http.post(environment.endpoint + '/api/games/search', { title: title })
       .subscribe((result: Array<any>) => {
-        this.resultsSubject.next(result);
+        this.resultsSubject.next(result.slice(4));
       });
   }
 }
