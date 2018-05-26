@@ -10,9 +10,11 @@ import { VideogamesService } from '../videogames.service';
 })
 export class ListComponent {
   @Input() elements: Array<Videogame>;
-  @Output() removeFromOtherList = new EventEmitter<Videogame>();
+  @Output() removeFromOtherList: EventEmitter<Videogame>;
 
-  constructor(private gamesService: VideogamesService) { }
+  constructor(private gamesService: VideogamesService) {
+    this.removeFromOtherList = new EventEmitter<Videogame>();
+  }
 
   gamesTracker(index, item): string {
     return item.name;
@@ -27,13 +29,13 @@ export class ListComponent {
     }
   }
 
+  private elementIsPresent(id: string): boolean {
+    return this.elements.filter((element: Videogame) => element._id === id).length === 1;
+  }
+
   private updateLists(game: Videogame): void {
     this.elements.push({ _id: game._id, name: game.name, status: game.status, platform: '' });
     this.removeFromOtherList.emit(game);
-  }
-
-  private elementIsPresent(id: string): boolean {
-    return this.elements.filter((element: Videogame) => element._id === id).length === 1;
   }
 
   onDragOver(event): void {
@@ -41,12 +43,15 @@ export class ListComponent {
   }
 
   onDragStart(event): void {
-    this.elements.forEach((element: Videogame) => {
+    this.elements.map((element: Videogame) => {
       if (element.name === event.target.innerText) {
-        const status = element.status === 'pending' ? 'finished' : 'pending';
         event.dataTransfer.setData('id', element._id);
-        event.dataTransfer.setData('status', status);
+        event.dataTransfer.setData('status', this.setStatus(element.status));
       }
     });
+  }
+
+  private setStatus(status: string): string {
+    return status === 'pending' ? 'finished' : 'pending';
   }
 }
