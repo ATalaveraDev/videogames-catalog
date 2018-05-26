@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 import { Videogame } from './videogame';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class VideogamesService {
@@ -14,16 +15,12 @@ export class VideogamesService {
 
   constructor(private http: HttpClient) { }
 
-  createVideogame(videogame: Videogame): void {
-    this.http.post('http://localhost:8080/api/videogames', {name: videogame.name, status: videogame.status, platform: videogame.platform})
-      .subscribe();
+  createVideogame(videogame: Videogame): Observable<Videogame> {
+    return this.http.post<Videogame>('http://localhost:8080/api/videogames', {name: videogame.name, status: videogame.status, platform: videogame.platform});
   }
 
-  getVideogames(status: string) {
-    this.http.get('http://localhost:8080/api/videogames/' + status)
-      .subscribe((response: Array<Videogame>) => {
-        status === 'pending' ? this.pendingSubject.next(response) : this.finishedSubject.next(response);
-      });
+  getVideogames(status: string): Observable<Array<Videogame>> {
+    return this.http.get<Array<Videogame>>(`http://localhost:8080/api/videogames/${status}`);
   }
 
   addPending(game: Videogame): void {
