@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 
 var port = process.env.PORT || 8080;
 
-mongoose.connect('supermario:supermario@ds119685.mlab.com:19685/videogames');
+mongoose.connect('mongodb://supermario:supermario@ds119685.mlab.com:19685/videogames', { useMongoClient: true });
 
 app.use(bodyParser.json({type: 'application/json'}));
 app.use(bodyParser.urlencoded({extended: true}));
