@@ -1,4 +1,4 @@
-<div (drop)="onDrop($event)" (dragstart)="onDragStart($event)" (dragover)="onDragOver($event)" (dragenter)="onDragEnter($event)">
+<div (drop)="onDrop($event)" (dragstart)="onDragStart($event)" (dragover)="onDragOver($event)">
   <ul class="list-group">
     <li class="list-group-item" *ngFor="let game of elements; trackBy: gamesTracker" draggable="true">
       <span>{{game.name}}</span>

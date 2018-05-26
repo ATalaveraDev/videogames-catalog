@@ -49,8 +49,4 @@ export class ListComponent {
       }
     });
   }
-
-  onDragEnter(event): void {
-    // this.elements.filter((element: Videogame) => element.name !== event.target.innerText);
-  }
 }
