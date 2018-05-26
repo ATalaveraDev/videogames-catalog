@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Videogame } from '../videogame';
+import { VideogamesService } from '../videogames.service';
 
 @Component({
   selector: 'app-list',
@@ -9,8 +10,9 @@ import { Videogame } from '../videogame';
 })
 export class ListComponent {
   @Input() elements: Array<Videogame>;
-  @Input() id: string;
-  @Output() gameDropped = new EventEmitter<any>();
+  @Output() removeFromOtherList = new EventEmitter<Videogame>();
+
+  constructor(private gamesService: VideogamesService) { }
 
   gamesTracker(index, item): string {
     return item.name;
@@ -19,32 +21,36 @@ export class ListComponent {
   onDrop(event): void {
     event.preventDefault();
 
-    if (!this.elementIsPresent(event.dataTransfer.getData('text'))) {
-      this.gameDropped.emit({_id: event.dataTransfer.getData('text'), destinationList: this.id});
+    if (!this.elementIsPresent(event.dataTransfer.getData('id'))) {
+      this.gamesService.updateGameStatus(event.dataTransfer.getData('id'), event.dataTransfer.getData('status'))
+        .subscribe((game: Videogame) => this.updateLists(game));
     }
   }
 
-  elementIsPresent(id) {
-    let isPresent = false;
+  private updateLists(game: Videogame): void {
+    this.elements.push({ _id: game._id, name: game.name, status: game.status, platform: '' });
+    this.removeFromOtherList.emit(game);
+  }
 
-    this.elements.forEach((element) => {
-      if (element._id === id) {
-        isPresent = true;
-      }
-    });
-
-    return isPresent;
+  private elementIsPresent(id: string): boolean {
+    return this.elements.filter((element: Videogame) => element._id === id).length === 1;
   }
 
   onDragOver(event): void {
     event.preventDefault();
   }
 
-  onDragStart(event) {
-    this.elements.forEach((element) => {
+  onDragStart(event): void {
+    this.elements.forEach((element: Videogame) => {
       if (element.name === event.target.innerText) {
-        event.dataTransfer.setData('text', element._id);
+        const status = element.status === 'pending' ? 'finished' : 'pending';
+        event.dataTransfer.setData('id', element._id);
+        event.dataTransfer.setData('status', status);
       }
     });
+  }
+
+  onDragEnter(event): void {
+    // this.elements.filter((element: Videogame) => element.name !== event.target.innerText);
   }
 }

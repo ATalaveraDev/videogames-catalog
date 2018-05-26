@@ -23,18 +23,8 @@ export class VideogamesService {
     return this.http.get<Array<Videogame>>(`http://localhost:8080/api/videogames/${status}`);
   }
 
-  addPending(game: Videogame): void {
-    this.http.put('http://localhost:8080/api/videogames/' + game._id + '/status', {status: 'pending'})
-      .subscribe((updatedGame: Videogame) => {
-        this.pending$.subscribe((list: Array<Videogame>) => list.push(updatedGame));
-      });
-  }
-
-  addFinished(game: Videogame): void {
-    this.http.put('http://localhost:8080/api/videogames/' + game._id + '/status', {status: 'finished'})
-      .subscribe((updatedGame: Videogame) => {
-        this.finished$.subscribe((list: Array<Videogame>) => list.push(updatedGame));
-      });
+  updateGameStatus(id: string, status: string): Observable<Videogame> {
+    return this.http.put<Videogame>(`http://localhost:8080/api/videogames/${id}/status`, { status: status });
   }
 
   removePending(id: string): void {

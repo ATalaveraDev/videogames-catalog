@@ -17,7 +17,15 @@ export class HomeComponent {
     this.finished = this.activatedRoute.snapshot.data.lists[1];
   }
 
-  updateLists(game: Videogame): void {
+  addToList(game: Videogame): void {
     game.status === 'pending' ? this.pending.push(game) : this.finished.push(game);
+  }
+
+  remove(game: Videogame): void {
+    if (game.status === 'pending') {
+      this.finished = this.finished.filter((element) => game.name !== element.name);
+    } else {
+      this.pending = this.pending.filter((element) => game.name !== element.name);
+    }
   }
 }
