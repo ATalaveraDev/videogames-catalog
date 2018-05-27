@@ -14,6 +14,7 @@ import { SearchComponent } from './search/search.component';
 import { InputComponent } from './search/input/input.component';
 import { ResultsComponent } from './search/results/results.component';
 import { SearchService } from './search/search.service';
+import { GamesStore } from './games.store';
 
 const routes: Routes = [
   {
@@ -41,6 +42,7 @@ const routes: Routes = [
     ReactiveFormsModule
   ],
   providers: [
+    GamesStore,
     AppResolver,
     VideogamesService,
     SearchService
