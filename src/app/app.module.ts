@@ -10,6 +10,7 @@ import { AddFormComponent } from './add-form/add-form.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AppResolver } from './app.resolver.service';
 import { HomeComponent } from './home/home.component';
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
   {
@@ -25,7 +26,8 @@ const routes: Routes = [
     AppComponent,
     ListComponent,
     AddFormComponent,
-    HomeComponent
+    HomeComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
