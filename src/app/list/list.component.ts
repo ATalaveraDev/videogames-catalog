@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
+import { List } from 'immutable';
+
 import { Videogame } from '../videogame';
 import { VideogamesService } from '../videogames.service';
+import { GamesStore } from '../games.store';
 
 @Component({
   selector: 'app-list',
@@ -9,12 +12,10 @@ import { VideogamesService } from '../videogames.service';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent {
-  @Input() elements: Array<Videogame>;
-  @Output() removeFromOtherList: EventEmitter<Videogame>;
+  @Input() elements: List<Videogame>;
+  selectedGame: string;
 
-  constructor(private gamesService: VideogamesService) {
-    this.removeFromOtherList = new EventEmitter<Videogame>();
-  }
+  constructor(private gamesService: VideogamesService, private gamesStore: GamesStore) { }
 
   gamesTracker(index, item): string {
     return item.name;
@@ -23,19 +24,7 @@ export class ListComponent {
   onDrop(event): void {
     event.preventDefault();
 
-    if (!this.elementIsPresent(event.dataTransfer.getData('id'))) {
-      this.gamesService.updateGameStatus(event.dataTransfer.getData('id'), event.dataTransfer.getData('status'))
-        .subscribe((game: Videogame) => this.updateLists(game));
-    }
-  }
-
-  private elementIsPresent(id: string): boolean {
-    return this.elements.filter((element: Videogame) => element._id === id).length === 1;
-  }
-
-  private updateLists(game: Videogame): void {
-    this.elements.push({ _id: game._id, name: game.name, status: game.status, platform: '' });
-    this.removeFromOtherList.emit(game);
+    this.gamesStore.addElement(event.dataTransfer.getData('id'), event.dataTransfer.getData('status'));
   }
 
   onDragOver(event): void {
@@ -43,12 +32,15 @@ export class ListComponent {
   }
 
   onDragStart(event): void {
-    this.elements.map((element: Videogame) => {
-      if (element.name === event.target.innerText) {
-        event.dataTransfer.setData('id', element._id);
-        event.dataTransfer.setData('status', this.setStatus(element.status));
-      }
-    });
+    event.dataTransfer.setData('name', event.target.innerText);
+    event.dataTransfer.setData('id', this.findGame(event.target.innerText)._id);
+    event.dataTransfer.setData('status', this.setStatus(this.findGame(event.target.innerText).status));
+  }
+
+  private findGame(name: string): Videogame {
+    return this.elements.filter((element: Videogame) => {
+      return element.name === name;
+    }).get(0);
   }
 
   private setStatus(status: string): string {
