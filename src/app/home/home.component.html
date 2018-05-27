@@ -1,5 +1,15 @@
 <div class="row text-center">
     <add-form (gameAdded)="addToList($event)"></add-form>
+    <div class="row">
+        <app-search>
+            <div class="col-md-4">
+                <app-search-input></app-search-input>
+            </div>
+            <div class="col-md-12">
+                <app-search-results></app-search-results>
+            </div>
+        </app-search>
+    </div>
     <!-- To be Done <app-search></app-search>-->
 </div>
 <div class="row">

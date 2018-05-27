@@ -2,17 +2,14 @@
 
 var express = require('express');
 var app = express();
-var bodyParser = require('body-parser');
-var methodOverride = require('method-override');
-var mongoose = require('mongoose');
+
+require('./server/modules/database/connection')();
+require('./server/modules/body-parser/body-parser')(app);
+require('./server/modules/method-override/method-override')(app);
 
 var port = process.env.PORT || 8080;
+var igdb = require('./server/modules/igdb-api/igdb')();
 
-mongoose.connect('mongodb://supermario:supermario@ds119685.mlab.com:19685/videogames', { useMongoClient: true });
-
-app.use(bodyParser.json({type: 'application/json'}));
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(express.static(__dirname + '/src/index.html'));
 
 app.use(function(req, res, next) {
@@ -22,7 +19,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-require('./server/routes')(app);
+require('./server/routes/routes')(app, igdb);
 
 app.all('/*', function (req, res) {
   res.sendFile('src/index.html', { root: __dirname });

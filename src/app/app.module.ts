@@ -11,6 +11,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppResolver } from './app.resolver.service';
 import { HomeComponent } from './home/home.component';
 import { SearchComponent } from './search/search.component';
+import { InputComponent } from './search/input/input.component';
+import { ResultsComponent } from './search/results/results.component';
+import { SearchService } from './search/search.service';
 
 const routes: Routes = [
   {
@@ -27,7 +30,9 @@ const routes: Routes = [
     ListComponent,
     AddFormComponent,
     HomeComponent,
-    SearchComponent
+    SearchComponent,
+    InputComponent,
+    ResultsComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +42,8 @@ const routes: Routes = [
   ],
   providers: [
     AppResolver,
-    VideogamesService
+    VideogamesService,
+    SearchService
   ],
   bootstrap: [AppComponent]
 })
