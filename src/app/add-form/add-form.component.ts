@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { VideogamesService } from '../videogames.service';
 import { Videogame } from '../videogame';
+import { GamesStore } from '../games.store';
 
 @Component({
   selector: 'add-form',
@@ -11,14 +12,12 @@ import { Videogame } from '../videogame';
 export class AddFormComponent implements OnInit {
   gameForm: FormGroup;
   showAdd: boolean;
-  @Output() gameAdded: EventEmitter<Videogame>;
 
-  constructor(private service: VideogamesService) {
+  constructor(private service: VideogamesService, private gamesStore: GamesStore) {
     this.showAdd = true;
-    this.gameAdded = new EventEmitter<Videogame>();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.gameForm = new FormGroup({
       name: new FormControl('', Validators.required),
       status: new FormControl('pending', Validators.required),
@@ -27,8 +26,7 @@ export class AddFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.service.createVideogame(this.gameForm.value)
-      .subscribe((game: Videogame) => this.gameAdded.emit(game));
+    this.gamesStore.create(this.gameForm.value);
     this.gameForm.reset({status: 'pending'});
   }
 

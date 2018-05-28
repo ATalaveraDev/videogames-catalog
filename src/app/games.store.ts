@@ -28,6 +28,12 @@ export class GamesStore {
       .subscribe((games: Array<Videogame>) => this.finished.next(List(games)));
   }
 
+  create(game: Videogame): void {
+    this.gamesService.createVideogame(game).subscribe((game: Videogame) => {
+      game.status === 'pending' ? this.pending.next(this.pending.getValue().push(game)) : this.finished.next(this.finished.getValue().push(game));
+    });
+  }
+
   addElement(id: string, status: string): void {
     this.gamesService.updateGameStatus(id, status).subscribe((game: Videogame) => {
       if (game.status === 'pending') {
