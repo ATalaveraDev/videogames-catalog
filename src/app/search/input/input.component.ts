@@ -5,15 +5,16 @@ import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/debounceTime';
 
 import { SearchService } from '../search.service';
+import { SearchStore } from '../search.store';
 
 @Component({
   selector: 'app-search-input',
-  template: '<input type="text" #search class="form-control">'
+  template: '<input type="text" #search class="form-control"><i class="glyphicon glyphicon-remove pull-right" (click)="clearSearch()"></i>'
 })
 export class InputComponent implements AfterViewInit {
   @ViewChild('search') searcher: ElementRef;
 
-  constructor(private ngZone: NgZone, private searchSrv: SearchService) { }
+  constructor(private ngZone: NgZone, private searchSrv: SearchService, private searchStore: SearchStore) { }
 
   ngAfterViewInit(): void {
     this.ngZone.runOutsideAngular(() => {
@@ -21,9 +22,15 @@ export class InputComponent implements AfterViewInit {
         .debounceTime(1000)
         .subscribe((event: KeyboardEvent) => {
           if ((<HTMLInputElement>event.target).value.length > 2) {
-            this.searchSrv.searchByTitle((<HTMLInputElement>event.target).value);
+            this.searchStore.searchByTitle((<HTMLInputElement>event.target).value);
           }
         });
     });
+  }
+
+  clearSearch(): void {
+    // this.results.length = 0;
+    this.searchStore.termSubject.next('');
+    // this.changeDetector.detectChanges();
   }
 }

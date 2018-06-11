@@ -1,0 +1,11 @@
+<form [formGroup]="myForm" novalidate>
+    <div class="col-xs-2">
+        <input type="text" class="form-control" formControlName="name">
+    </div>
+    <div class="col-xs-1">
+        <button class="btn btn-success">Submit</button>
+    </div>
+    <div class="col-xs-1">
+        <button class="btn btn-success" (click)="run()">Navigate</button>
+    </div>
+</form>

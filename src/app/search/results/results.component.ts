@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 
 import { SearchService } from '../search.service';
+import { SearchStore } from '../search.store';
 
 @Component({
   selector: 'app-search-results',
@@ -10,15 +11,10 @@ import { SearchService } from '../search.service';
 export class ResultsComponent {
   results: Array<any>;
 
-  constructor(public searchSrv: SearchService, private changeDetector: ChangeDetectorRef) {
+  constructor(public searchSrv: SearchService, private changeDetector: ChangeDetectorRef, private searchStore: SearchStore) {
     this.searchSrv.results$.subscribe((games) => {
       this.results = games;
       this.changeDetector.detectChanges();
     });
-  }
-
-  clearSearch(): void {
-    this.results.length = 0;
-    this.changeDetector.detectChanges();
   }
 }

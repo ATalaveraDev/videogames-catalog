@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { VideogamesService } from '../videogames.service';
-import { Videogame } from '../videogame';
 import { GamesStore } from '../games.store';
 
 @Component({
