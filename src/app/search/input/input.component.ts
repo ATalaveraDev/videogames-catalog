@@ -8,7 +8,7 @@ import { SearchService } from '../search.service';
 
 @Component({
   selector: 'app-search-input',
-  template: '<input type="text" #search class="form-control">'
+  template: '<input type="text" #search class="form-control" placeholder="Search by title">'
 })
 export class InputComponent implements AfterViewInit {
   @ViewChild('search', { static: true }) searcher: ElementRef;
