@@ -8,7 +8,7 @@ require('./server/modules/body-parser/body-parser')(app);
 require('./server/modules/method-override/method-override')(app);
 
 var port = process.env.PORT || 8080;
-var igdb = require('./server/modules/igdb-api/igdb')();
+var igdb = require('./server/modules/igdb-api/igdb');
 
 app.use(express.static(__dirname + '/src/index.html'));
 

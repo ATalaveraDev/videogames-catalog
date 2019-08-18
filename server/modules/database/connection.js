@@ -18,7 +18,7 @@ function getDbKey() {
 
 function connectToDB(key) {
   try {
-    mongoose.connect(key, { useMongoClient: true });
+    mongoose.connect(key, { useNewUrlParser: true });
   } catch (exception) {
     throw new Error('Could not connect to Videogames Database');
   }
