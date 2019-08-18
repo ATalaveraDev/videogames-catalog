@@ -11,7 +11,7 @@ import { SearchService } from '../search.service';
   template: '<input type="text" #search class="form-control">'
 })
 export class InputComponent implements AfterViewInit {
-  @ViewChild('search') searcher: ElementRef;
+  @ViewChild('search', { static: true }) searcher: ElementRef;
 
   constructor(private ngZone: NgZone, private searchSrv: SearchService) { }
 
