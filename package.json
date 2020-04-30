@@ -27,7 +27,7 @@
     "core-js": "^3.2.1",
     "express": "^4.17.1",
     "igdb-api-node": "^4.0.3",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "karma-coverage-istanbul-reporter": "^2.1.0",
     "karma-jasmine": "^2.0.1",
     "method-override": "^3.0.0",
